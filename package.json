@@ -1,0 +1,30 @@
+{
+  "name": "lifx-api",
+  "version": "1.0.0",
+  "description": "LIFX Light Bulb REST API wrapper for Nodejs",
+  "main": "lifx.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ywadi/lifx"
+  },
+  "keywords": [
+    "lifx",
+    "light",
+    "bulb",
+    "rest",
+    "api"
+  ],
+  "author": "Yousef Wadi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ywadi/lifx/issues"
+  },
+  "homepage": "https://github.com/ywadi/lifx",
+  "dependencies": {
+    "request": "^2.56.0"
+  },
+  "devDependencies": {}
+}
