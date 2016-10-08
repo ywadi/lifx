@@ -9,6 +9,7 @@ lifx.prototype.listLights = function(selector, cb) {
 	var url = createUri(this.accessToken, selector, "");
 	cb = cb || function() {};
 	sendRequest(url, "GET", null, function(err, res, body) {
+		err = checkStatusError(err, res);
 		return cb(err, body);
 	});
 };
@@ -17,6 +18,7 @@ lifx.prototype.togglePower = function(selector, cb) {
 	var url = createUri(this.accessToken, selector, "/toggle");
 	cb = cb || function() {};
 	sendRequest(url, "POST", null, function(err, res, body) {
+		err = checkForErrors(err, res, body);
 		return cb(err, body);
 	});
 };
@@ -29,7 +31,8 @@ lifx.prototype.setPower = function(selector, _power, _duration, cb) {
 		duration: _duration || 1.0
 	};
 	sendRequest(url, "PUT", options, function(err, res, body) {
-		cb(err, body);
+		err = checkForErrors(err, res, body);
+		return cb(err, body);
 	});
 };
 
@@ -42,7 +45,8 @@ lifx.prototype.setColor = function(selector, _color, _duration, _power_on, cb) {
 		color: _color || "red"
 	};
 	sendRequest(url, "PUT", options, function(err, res, body) {
-		cb(err, body);
+		err = checkForErrors(err, res, body);
+		return cb(err, body);
 	});
 }
 
@@ -61,7 +65,8 @@ lifx.prototype.breatheEffect = function(selector, _color, _from_color, _period, 
 		peak: _peak || 0.5
 	};
 	sendRequest(url, "POST", options, function(err, res, body) {
-		cb(err, body);
+		err = checkForErrors(err, res, body);
+		return cb(err, body);
 	});
 }
 
@@ -77,7 +82,8 @@ lifx.prototype.pulseEffect = function(selector, _color, _from_color, _period, _c
 		power_on: _power_on || true
 	}
 	sendRequest(url, "POST", options, function(err, res, body) {
-		cb(err, body);
+		err = checkForErrors(err, res, body);
+		return cb(err, body);
 	});
 }
 
@@ -100,6 +106,43 @@ function createUri(token, selector, path) {
 		token,
 		selector,
 		path);
+}
+
+function checkForErrors(err, res, body) {
+
+	if (err) {
+		return err;
+	}
+	err = checkStatusError(err, res);
+
+	if (err) {
+		return err;
+	}
+
+	if (body && body.results && body.results instanceof Array) {
+		if (body.results.length == 0) {
+			return "No lights found.";
+		} else {
+			return null;
+		}
+	} else {
+		return "Invalid object returned from lifx server";
+	}
+
+}
+
+
+function checkStatusError(err, res) {
+
+	if (err) {
+		return err;
+	}
+
+	if (res.statusCode !== 200 && res.statusCode !== 207) {
+		return "Invalid status code (" + res.statusCode + ") from lifx servers";
+	} else {
+		return null;
+	}
 }
 
 module.exports = lifx;
