@@ -21,12 +21,12 @@ lifx.prototype.togglePower = function(selector, cb) {
 	});
 };
 
-lifx.prototype.setPower = function(selector, _state, _duration, cb) {
-	var url = createUri(this.accessToken, selector, "/power");
+lifx.prototype.setPower = function(selector, _power, _duration, cb) {
+	var url = createUri(this.accessToken, selector, "/state");
 	cb = cb || function() {};
 	var options = {
-		state: _state || "on",
-		duration: _duration || "1.0"
+		power: _power || "on",
+		duration: _duration || 1.0
 	};
 	sendRequest(url, "PUT", options, function(err, res, body) {
 		cb(err, body);
@@ -34,11 +34,11 @@ lifx.prototype.setPower = function(selector, _state, _duration, cb) {
 };
 
 lifx.prototype.setColor = function(selector, _color, _duration, _power_on, cb) {
-	var url = createUri(this.accessToken, selector, "/color");
+	var url = createUri(this.accessToken, selector, "/state");
 	cb = cb || function() {};
 	var options = {
-		power_on: _power_on || true,
-		duration: _duration || "1.0",
+		power: true,
+		duration: _duration || 1.0,
 		color: _color || "red"
 	};
 	sendRequest(url, "PUT", options, function(err, res, body) {
