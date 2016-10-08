@@ -7,9 +7,7 @@ function lifx(accessToken) {
 
 lifx.prototype.listLights = function(selector, cb) {
 	var url = createUri(this.accessToken, selector, "");
-	if (!cb) {
-		return cb("Callback Function not defined after selector");
-	}
+	cb = cb || function() {};
 	sendRequest(url, "GET", null, function(err, res, body) {
 		return cb(err, body);
 	});
@@ -17,9 +15,7 @@ lifx.prototype.listLights = function(selector, cb) {
 
 lifx.prototype.togglePower = function(selector, cb) {
 	var url = createUri(this.accessToken, selector, "/toggle");
-	if (!cb) {
-		return cb("Callback Function not defined after selector");
-	}
+	cb = cb || function() {};
 	sendRequest(url, "POST", null, function(err, res, body) {
 		return cb(err, body);
 	});
