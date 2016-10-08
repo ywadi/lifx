@@ -25,7 +25,7 @@ Gets lights belonging to the authenticated account. Filter the lights using sele
 
 > **selector** : string [(See official selector documentations here)](http://developer.lifx.com/#selectors)
 
-> **callback**(body) : function 
+> **callback**(err, body) : function 
 
 
 EXAMPLE RESPONSE CALLBACK BODY
@@ -63,7 +63,7 @@ Turn off lights if they are on, or turn them on if they are off. Physically powe
 
 > **selector** : string [(See official selector documentations here)](http://developer.lifx.com/#selectors)
 
-> **callback**(body) : function (Body contains server response status if any) 
+> **callback**(err, body) : function (Body contains server response status if any) 
 
 
 
@@ -77,7 +77,7 @@ Turn lights on, or turn lights off. You can optionally set a duration which will
 
 > **duration** : float (Fade to the given `state` over a duration of seconds. Defaults to `1.0`.)
 
-> **callback**(body) : function (Body contains server response status if any) 
+> **callback**(err, body) : function (Body contains server response status if any) 
 
 
 function setColor(selector, color, duration, power_on, cb)
@@ -92,7 +92,7 @@ Set the lights to any color. You can optionally set a duration which will fade b
 
 > **power_on** : boolean (Turn on first? Defaults to `true`.)
 
-> **callback**(body) : function (Body contains server response status if any) 
+> **callback**(err, body) : function (Body contains server response status if any) 
 
 
 function breatheEffect(selector, color, from_color, period, cycles, persist, power_on, peak, cb)
