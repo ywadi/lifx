@@ -102,7 +102,7 @@ function sendRequest(_url, _method, _data, _cb) {
 
 function createUri(token, selector, path) {
 	return util.format(
-		'https://%s:@api.lifx.com/v1/lights/%s/%s',
+		'https://%s:@api.lifx.com/v1/lights/%s%s',
 		token,
 		selector,
 		path);
